@@ -64,7 +64,13 @@ if [ "$CONNECT_TO_TESTNET" = "True" ]; then
 
     SERVER_PID=$!  # Store the process ID
     sleep 5
-    open http://localhost:3000
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        open http://localhost:3000
+    elif command -v xdg-open >/dev/null 2>&1; then
+        xdg-open http://localhost:3000
+    else
+        echo "Cannot open the browser automatically. Please open http://localhost:3000 manually."
+    fi
     cd ..
 
     # Wait until modal-login/temp-data/userData.json exists
